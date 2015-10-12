@@ -254,10 +254,6 @@
                 <version>${maven-resources-plugin.version}</version>
                 <executions>
                   <execution>
-                    <phase>generate-sources</phase>
-                    <goals>
-                      <goal>copy-resources</goal>
-                    </goals>
                     <configuration>
                       <outputDirectory>${project.build.directory}/unwoven-classes</outputDirectory>
                       <resources>
@@ -293,15 +289,6 @@
                     <effort>Max</effort>
                     <failOnError>true</failOnError>
                 </configuration>
-                <executions>
-                    <execution>
-                        <id>findbugs-check</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -314,15 +301,6 @@
                     <failsOnError>true</failsOnError>
                     <includeTestSourceDirectory>true</includeTestSourceDirectory>
                 </configuration>
-                <executions>
-                    <execution>
-                        <id>checkstyle</id>
-                        <goals>
-                            <goal>checkstyle</goal>
-                        </goals>
-                        <phase>compile</phase>
-                    </execution>
-                </executions>
                 <dependencies>
                     <dependency>
                         <groupId>com.puppycrawl.tools</groupId>
@@ -377,14 +355,6 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>buildnumber-maven-plugin</artifactId>
                 <version>${maven-buildnumber-plugin-version}</version>
-                <executions>
-                    <execution>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>create-timestamp</goal>
-                        </goals>
-                    </execution>
-                </executions>
                 <configuration>
                     <doCheck>false</doCheck>
                     <doUpdate>false</doUpdate>
@@ -433,14 +403,6 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>aspectj-maven-plugin</artifactId>
                 <version>${maven-aspectj-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <phase>process-classes</phase>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                </executions>
                 <configuration>
                     <sources />
                     <complianceLevel>${project.build.sourceVersion}</complianceLevel>
@@ -538,14 +500,6 @@
                         <exclude>**/*.p8</exclude>
                     </excludes>
                 </configuration>
-                <executions>
-                    <execution>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
