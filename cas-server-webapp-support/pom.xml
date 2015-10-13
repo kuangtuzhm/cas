@@ -78,7 +78,11 @@
       <version>${project.version}</version>
       <scope>runtime</scope>
     </dependency>
-    
+    <dependency>
+      <groupId>org.jasig.cas</groupId>
+      <artifactId>cas-server-support-jdbc</artifactId>
+      <version>${project.version}</version>
+    </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context-support</artifactId>
@@ -112,8 +116,6 @@
       <groupId>org.jasig.cas</groupId>
       <artifactId>cas-server-core</artifactId>
       <version>${project.version}</version>
-      <type>test-jar</type>
-      <scope>test</scope>
     </dependency>
 
     <dependency>

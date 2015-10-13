@@ -31,8 +31,6 @@
     <name>Apereo Central Authentication Service</name>
     <description>Apereo CAS SSO server libraries and Web application.</description>
     <version>4.1.0</version>
-    <url>http://www.jasig.org/cas/</url>
-    <inceptionYear>2004</inceptionYear>
 
     <licenses>
         <license>
@@ -541,6 +539,11 @@
 			<artifactId>jsp-api</artifactId>
 			<version>2.1</version>
 		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.30</version>
+		</dependency>
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjrt</artifactId>
@@ -627,7 +630,7 @@
             <version>${log4j.version}</version>
             <scope>runtime</scope>
         </dependency>
-
+		
         <dependency>
             <groupId>org.jasig.inspektr</groupId>
             <artifactId>inspektr-aspects</artifactId>

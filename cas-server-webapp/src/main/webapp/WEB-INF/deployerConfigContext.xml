@@ -88,7 +88,7 @@
     <!-- Required for proxy ticket mechanism. -->
     <bean id="proxyAuthenticationHandler"
           class="org.jasig.cas.authentication.handler.support.HttpBasedServiceCredentialsAuthenticationHandler"
-          p:httpClient-ref="supportsTrustStoreSslSocketFactoryHttpClient" />
+          p:requireSecure="false" p:httpClient-ref="supportsTrustStoreSslSocketFactoryHttpClient" />
 
     <!--
        | TODO: Replace this component with one suitable for your enviroment.
@@ -102,6 +102,7 @@
        | * org.jasig.cas.adaptors.x509.authentication.handler.support.X509CredentialsAuthenticationHandler
        | * org.jasig.cas.support.spnego.authentication.handler.support.JCIFSSpnegoAuthenticationHandler
        -->
+    <!--
     <bean id="primaryAuthenticationHandler"
           class="org.jasig.cas.authentication.AcceptUsersAuthenticationHandler">
         <property name="users">
@@ -110,7 +111,33 @@
             </map>
         </property>
     </bean>
-
+    -->
+	<bean id="primaryAuthenticationHandler" class="org.jasig.cas.adaptors.jdbc.QueryDatabaseAuthenticationHandler">    
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="sql" value="select pwd from user where loginName=?"></property>
+		<property name="passwordEncoder" ref="MD5PasswordEncoder"></property>
+	</bean>
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">   
+		<property name="driverClassName">
+			<value>com.mysql.jdbc.Driver</value>
+		</property>   
+		<property name="url">
+			<value>jdbc:mysql://192.168.1.70:3306/focus_test</value>
+		</property>   
+		<property name="username">
+			<value>root</value>
+		</property>   
+		<property name="password">
+			<value>123456</value>
+		</property>
+	</bean> 
+	
+	<bean id="MD5PasswordEncoder" class="org.jasig.cas.authentication.handler.DefaultPasswordEncoder">
+		<constructor-arg index="0">
+			<value>MD5</value>
+		</constructor-arg>
+	</bean>
+	
     <!-- Required for proxy ticket mechanism -->
     <bean id="proxyPrincipalResolver"
           class="org.jasig.cas.authentication.principal.BasicPrincipalResolver" />
