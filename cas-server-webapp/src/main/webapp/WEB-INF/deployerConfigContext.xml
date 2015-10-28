@@ -60,8 +60,17 @@
                    | If more than one instance of the same handler class is configured, you must explicitly
                    | set its name to something other than its default name (typically the simple class name).
                    -->
+                 <!--  
                 <entry key-ref="proxyAuthenticationHandler" value-ref="proxyPrincipalResolver" />
+                -->
+                <!-- 如果想查询更多的用户属性，可以用这个方式 -->
+                 
                 <entry key-ref="primaryAuthenticationHandler" value-ref="primaryPrincipalResolver" />
+                
+                <!-- 不查询更多的用户属性，可以用这个方式 -->
+                <!-- 
+                <entry key-ref="primaryAuthenticationHandler" value-ref="proxyPrincipalResolver" />
+                -->
             </map>
         </constructor-arg>
 
@@ -122,7 +131,7 @@
 			<value>com.mysql.jdbc.Driver</value>
 		</property>   
 		<property name="url">
-			<value>jdbc:mysql://192.168.1.70:3306/focus_test</value>
+			<value>jdbc:mysql://192.168.1.70:3306/zealot_boss</value>
 		</property>   
 		<property name="username">
 			<value>root</value>
@@ -146,6 +155,7 @@
        | Resolves a principal from a credential using an attribute repository that is configured to resolve
        | against a deployer-specific store (e.g. LDAP).
        -->
+    <!-- 如果想查询更多的用户属性，可以用这个方式 -->
     <bean id="primaryPrincipalResolver"
           class="org.jasig.cas.authentication.principal.PersonDirectoryPrincipalResolver"
           p:principalFactory-ref="principalFactory"
@@ -155,9 +165,11 @@
     Bean that defines the attributes that a service may return.  This example uses the Stub/Mock version.  A real implementation
     may go against a database or LDAP server.  The id should remain "attributeRepository" though.
     +-->
+    
+    <!--
+    
     <bean id="attributeRepository" class="org.jasig.services.persondir.support.NamedStubPersonAttributeDao"
           p:backingMap-ref="attrRepoBackingMap" />
-
     <util:map id="attrRepoBackingMap">
         <entry key="uid" value="uid" />
         <entry key="eduPersonAffiliation" value="eduPersonAffiliation" />
@@ -170,7 +182,26 @@
                 <value>org</value>
             </list>
         </entry>
-    </util:map>
+     </util:map>      
+     -->     
+    <bean id="attributeRepository"  class="org.jasig.services.persondir.support.jdbc.SingleRowJdbcPersonAttributeDao" >  
+        <constructor-arg index="0" ref="dataSource"/>  
+        <constructor-arg index="1" value="select * from user where {0}"/>  
+        <property name="queryAttributeMapping">  
+            <map>  
+				<!--这里的key需写username,这个字段名在SimpleUsernameAttributeProvider这个类中写死了，value对应数据库用户名字段 -->  
+                <entry key="username" value="loginName"/>    
+            </map>  
+        </property>  
+        <property name="resultAttributeMapping">  
+            <map>  
+                <entry key="uid" value="uid"/>
+                <entry key="uname" value="uname"/>  
+                <entry key="email" value="email"/>
+                <entry key="phonenum" value="phoneNum"/>
+            </map>  
+        </property>  
+    </bean>  
 
     <bean id="serviceRegistryDao" class="org.jasig.cas.services.JsonServiceRegistryDao"
           c:configDirectory="${service.registry.config.location:classpath:services}" />

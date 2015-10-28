@@ -9,7 +9,7 @@
     "@class" : "org.jasig.cas.services.ReturnAllowedAttributeReleasePolicy",
     "authorizedToReleaseCredentialPassword": false,
     "authorizedToReleaseProxyGrantingTicket": false,
-    "allowedAttributes" : [ "java.util.ArrayList", [ "cn", "mail" ] ]
+    "allowedAttributes" : [ "java.util.ArrayList", [ "uid", "email", "uname", "phoneNum" ] ]
   },
   "publicKey" : {
     "@class" : "org.jasig.cas.services.RegisteredServicePublicKeyImpl",
