@@ -199,6 +199,7 @@
                 <entry key="uname" value="uname"/>  
                 <entry key="email" value="email"/>
                 <entry key="phonenum" value="phoneNum"/>
+                <entry key="isadmin" value="isAdmin"/>
             </map>  
         </property>  
     </bean>  
