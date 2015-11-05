@@ -51,6 +51,11 @@ public class UsernamePasswordCredential implements Credential, Serializable {
     @NotNull
     @Size(min=1, message = "required.password")
     private String password;
+    
+    /** The authcode. */
+    @NotNull
+    @Size(min=1, message = "required.authcode")
+    private String authcode;
 
     /** Default constructor. */
     public UsernamePasswordCredential() {}
@@ -61,9 +66,16 @@ public class UsernamePasswordCredential implements Credential, Serializable {
      * @param userName Non-null user name.
      * @param password Non-null password.
      */
-    public UsernamePasswordCredential(final String userName, final String password) {
+    public UsernamePasswordCredential(final String userName,final String password) {
         this.username = userName;
         this.password = password;
+    }
+    
+    public UsernamePasswordCredential(final String userName, 
+    		final String password, final String authcode) {
+        this.username = userName;
+        this.password = password;
+        this.authcode = authcode;
     }
 
     /**
@@ -107,7 +119,15 @@ public class UsernamePasswordCredential implements Credential, Serializable {
         return this.username + PASSWORD_SUFFIX;
     }
 
-    @Override
+    public String getAuthcode() {
+		return authcode;
+	}
+
+	public void setAuthcode(String authcode) {
+		this.authcode = authcode;
+	}
+
+	@Override
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
@@ -125,6 +145,10 @@ public class UsernamePasswordCredential implements Credential, Serializable {
         if (username != null ? !username.equals(that.username) : that.username != null) {
             return false;
         }
+        
+        if (authcode != null ? !authcode.equals(that.authcode) : that.authcode != null) {
+            return false;
+        }
 
         return true;
     }
@@ -134,6 +158,7 @@ public class UsernamePasswordCredential implements Credential, Serializable {
         return new HashCodeBuilder()
                 .append(username)
                 .append(password)
+                .append("authcode")
                 .toHashCode();
     }
 

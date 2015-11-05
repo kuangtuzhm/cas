@@ -25,6 +25,9 @@ import org.jasig.cas.MessageDescriptor;
 import org.jasig.cas.authentication.AuthenticationException;
 import org.jasig.cas.authentication.Credential;
 import org.jasig.cas.authentication.HandlerResult;
+import org.jasig.cas.authentication.UsernamePasswordCredential;
+import org.jasig.cas.authentication.handler.BadAuthcodeAuthenticationException;
+import org.jasig.cas.authentication.handler.NullAuthcodeAuthenticationException;
 import org.jasig.cas.authentication.principal.Service;
 import org.jasig.cas.ticket.TicketException;
 import org.jasig.cas.ticket.ServiceTicket;
@@ -41,8 +44,12 @@ import org.springframework.webflow.core.collection.LocalAttributeMap;
 import org.springframework.webflow.execution.Event;
 import org.springframework.webflow.execution.RequestContext;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotNull;
+
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -314,4 +321,23 @@ public class AuthenticationViaFormAction {
                 .args(warning.getParams());
         context.addMessage(builder.build());
     }
+    
+    public Event validatorCode(final RequestContext context,  final Credential credential, final MessageContext messageContext) throws Exception {   
+        final HttpServletRequest request = WebUtils.getHttpServletRequest(context);  
+        HttpSession session = request.getSession();  
+        String authcode = (String)session.getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);  
+        session.removeAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);  
+          
+        UsernamePasswordCredential upc = (UsernamePasswordCredential)credential;  
+        String submitAuthcode =upc.getAuthcode();  
+        if(StringUtils.isEmpty(submitAuthcode) || StringUtils.isEmpty(authcode)){    
+          return newEvent(ERROR, new NullAuthcodeAuthenticationException());	
+        }  
+        if(submitAuthcode.equals(authcode)){	
+        	return newEvent(SUCCESS);
+        }
+        Map<String, Class<? extends Exception>> handlerErrors = new HashMap<>();
+        handlerErrors.put("BadAuthcodeAuthenticationException", BadAuthcodeAuthenticationException.class);
+        return newEvent("authenticationCodeFailure", new AuthenticationException(handlerErrors));	
+      }
 }

@@ -19,12 +19,14 @@
 package org.jasig.cas.web.flow;
 
 import org.jasig.cas.authentication.AuthenticationException;
+import org.jasig.cas.authentication.handler.BadAuthcodeAuthenticationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.binding.message.MessageBuilder;
 import org.springframework.binding.message.MessageContext;
 
 import javax.validation.constraints.NotNull;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -66,6 +68,7 @@ public class AuthenticationExceptionHandler {
         DEFAULT_ERROR_LIST.add(org.jasig.cas.authentication.InvalidLoginLocationException.class);
         DEFAULT_ERROR_LIST.add(org.jasig.cas.authentication.AccountPasswordMustChangeException.class);
         DEFAULT_ERROR_LIST.add(org.jasig.cas.authentication.InvalidLoginTimeException.class);
+        DEFAULT_ERROR_LIST.add(BadAuthcodeAuthenticationException.class);
     }
 
     /** Ordered list of error classes that this class knows how to handle. */

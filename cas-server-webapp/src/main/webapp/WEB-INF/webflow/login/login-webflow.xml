@@ -87,6 +87,7 @@
         <binder>
             <binding property="username" required="true"/>
             <binding property="password" required="true"/>
+            <binding property="authcode" required="true"/>
         </binder>
         <on-entry>
             <set name="viewScope.commandName" value="'credential'"/>
@@ -95,9 +96,15 @@
             <evaluate expression="samlMetadataUIParserAction" />
             -->
         </on-entry>
-        <transition on="submit" bind="true" validate="true" to="realSubmit"/>
+        <transition on="submit" bind="true" validate="true" to="authcodeValidate"/>
     </view-state>
-
+    <!-- 验证码  -->
+	<action-state id="authcodeValidate">	
+	    <evaluate expression="authenticationViaFormAction.validatorCode(flowRequestContext, flowScope.credential, messageContext)" />	
+	    <transition on="authenticationCodeFailure" to="handleAuthenticationFailure" />	
+	    <transition on="success" to="realSubmit" />	
+    </action-state>
+    
     <action-state id="realSubmit">
         <evaluate
                 expression="authenticationViaFormAction.submit(flowRequestContext, flowScope.credential, messageContext)"/>
@@ -149,6 +156,7 @@
         <transition on="InvalidLoginTimeException" to="casBadHoursView"/>
         <transition on="FailedLoginException" to="generateLoginTicket"/>
         <transition on="AccountNotFoundException" to="generateLoginTicket"/>
+        <transition on="BadAuthcodeAuthenticationException" to="generateLoginTicket"/>
         <transition on="UNKNOWN" to="generateLoginTicket"/>
     </action-state>
 
