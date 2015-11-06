@@ -1442,6 +1442,7 @@
                             <systemPropertyVariables>
                                 <log4j.configuration>file:noLogs.xml</log4j.configuration>
                             </systemPropertyVariables>
+                            <skipTests>true</skipTests>
                         </configuration>
                     </plugin>
                 </plugins>

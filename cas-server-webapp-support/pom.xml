@@ -65,24 +65,20 @@
       <groupId>org.springframework</groupId>
       <artifactId>spring-aop</artifactId>
     </dependency>
-
-    <dependency>
-      <groupId>org.jasig.cas</groupId>
-      <artifactId>cas-server-core</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-
+    
     <dependency>
       <groupId>org.jasig.cas</groupId>
       <artifactId>cas-server-support-generic</artifactId>
       <version>${project.version}</version>
       <scope>runtime</scope>
     </dependency>
+    
     <dependency>
       <groupId>org.jasig.cas</groupId>
       <artifactId>cas-server-support-jdbc</artifactId>
       <version>${project.version}</version>
     </dependency>
+    
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context-support</artifactId>
@@ -110,12 +106,6 @@
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-entitymanager</artifactId>
       <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.jasig.cas</groupId>
-      <artifactId>cas-server-core</artifactId>
-      <version>${project.version}</version>
     </dependency>
 
     <dependency>
@@ -185,4 +175,16 @@
   <properties>
     <cs.dir>${project.parent.basedir}</cs.dir>
   </properties>
+  <build>   
+    <plugins>   
+      <plugin>   
+        <groupId>org.apache.maven.plugins</groupId>   
+        <artifactId>maven-surefire-plugin</artifactId>   
+        <version>2.4.2</version>   
+        <configuration>   
+          <skipTests>true</skipTests>   
+        </configuration>   
+      </plugin>   
+    </plugins>   
+  </build>  
 </project>

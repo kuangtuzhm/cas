@@ -331,7 +331,9 @@ public class AuthenticationViaFormAction {
         UsernamePasswordCredential upc = (UsernamePasswordCredential)credential;  
         String submitAuthcode =upc.getAuthcode();  
         if(StringUtils.isEmpty(submitAuthcode) || StringUtils.isEmpty(authcode)){    
-          return newEvent(ERROR, new NullAuthcodeAuthenticationException());	
+          Map<String, Class<? extends Exception>> handlerErrors = new HashMap<>();
+          handlerErrors.put("NullAuthcodeAuthenticationException", NullAuthcodeAuthenticationException.class);
+          return newEvent("authenticationCodeFailure", new AuthenticationException(handlerErrors));
         }  
         if(submitAuthcode.equals(authcode)){	
         	return newEvent(SUCCESS);

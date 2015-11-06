@@ -17,8 +17,8 @@
 	<script type="text/javascript" src='<c:url value="js/login.js" />' /></script>
 	
 	<script type="text/javascript">
-	if (window.frames.length != parent.frames.length) {
-		//
+	if (window.location != top.location) {
+		top.location = window.location;
 	}
 	</script>
 </head>

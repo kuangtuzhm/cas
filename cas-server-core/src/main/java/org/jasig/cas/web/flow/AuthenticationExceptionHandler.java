@@ -20,6 +20,7 @@ package org.jasig.cas.web.flow;
 
 import org.jasig.cas.authentication.AuthenticationException;
 import org.jasig.cas.authentication.handler.BadAuthcodeAuthenticationException;
+import org.jasig.cas.authentication.handler.NullAuthcodeAuthenticationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.binding.message.MessageBuilder;
@@ -62,13 +63,14 @@ public class AuthenticationExceptionHandler {
     static {
         DEFAULT_ERROR_LIST.add(javax.security.auth.login.AccountLockedException.class);
         DEFAULT_ERROR_LIST.add(javax.security.auth.login.FailedLoginException.class);
+        DEFAULT_ERROR_LIST.add(NullAuthcodeAuthenticationException.class);
+        DEFAULT_ERROR_LIST.add(BadAuthcodeAuthenticationException.class);
         DEFAULT_ERROR_LIST.add(javax.security.auth.login.CredentialExpiredException.class);
         DEFAULT_ERROR_LIST.add(javax.security.auth.login.AccountNotFoundException.class);
         DEFAULT_ERROR_LIST.add(org.jasig.cas.authentication.AccountDisabledException.class);
         DEFAULT_ERROR_LIST.add(org.jasig.cas.authentication.InvalidLoginLocationException.class);
         DEFAULT_ERROR_LIST.add(org.jasig.cas.authentication.AccountPasswordMustChangeException.class);
         DEFAULT_ERROR_LIST.add(org.jasig.cas.authentication.InvalidLoginTimeException.class);
-        DEFAULT_ERROR_LIST.add(BadAuthcodeAuthenticationException.class);
     }
 
     /** Ordered list of error classes that this class knows how to handle. */

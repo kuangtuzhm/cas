@@ -157,6 +157,7 @@
         <transition on="FailedLoginException" to="generateLoginTicket"/>
         <transition on="AccountNotFoundException" to="generateLoginTicket"/>
         <transition on="BadAuthcodeAuthenticationException" to="generateLoginTicket"/>
+        <transition on="NullAuthcodeAuthenticationException" to="generateLoginTicket"/>
         <transition on="UNKNOWN" to="generateLoginTicket"/>
     </action-state>
 
